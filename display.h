@@ -9,7 +9,7 @@
 const int DISPLAY_DEFAULT_W = 500;
 const int DISPLAY_DEFAULT_H = 500;
 
-const int PF_DEFAULT_PALSIZE = 765;
+const int PF_DEFAULT_PALSIZE = 256;
 const int PF_DEFAULT_W = 100;
 const int PF_DEFAULT_H = 100;
 
@@ -30,7 +30,7 @@ protected:
 	bool ready = false;	//voidaanko piirt‰‰ eli onko initialize() kutsuttu onnistuneesti
 
 	int w, h;		//kent‰n koko
-	int palSize;	//paletin koko - montako v‰ri‰
+	int palSize;	//paletin koko - montako v‰ri‰ per ulottuvuus
 
 	Uint32* pixels = NULL;
 	Uint32* palette = NULL;
@@ -45,7 +45,8 @@ public:
 	bool initialize(int width = PF_DEFAULT_W, int height = PF_DEFAULT_H, int paletteSize = PF_DEFAULT_PALSIZE);
 
 	void putPixel(int x, int y, Uint32 value);		//aseta pikseli. Kutsu update t‰m‰n j‰lkeen
-	
+	void putPixel(int x, int y, Uint32 A, Uint32 B);
+
 	bool show();	//tee muutokset tekstuuriin ja piirr‰ ruudulle
 
 	void close();	//tuhoa tekstuuri

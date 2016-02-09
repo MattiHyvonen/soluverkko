@@ -6,7 +6,6 @@ std::vector<settingsT> list; //tänne tallennetaan
 int index =0;
 
 
-
 /*load list from conf file*/
 void loadSettings() {
 
@@ -27,8 +26,13 @@ void loadSettings() {
 				settingsT S = *((settingsT*)mem);
 				list.push_back(S);
 			}
+
+			std::cout << "Luettiin asetukset\n";
 			file.close();
 		}
+	}
+	else{
+		std::cout << "Ei voitu lukea tiedostoa " << CONF_FILE << "\n";
 	}
 }
 
@@ -63,12 +67,17 @@ void random() {
 }
 
 void settingsT::randomizeRule() {
-	for (int i = 0; i < 9; i++)
-		rule[i] = (rand() % 3 - 1);
+	for (int i = 0; i < 81; i++) {
+		A_rule[i] = (rand() % 3 - 1);
+		B_rule[i] = (rand() % 3 - 1);
+	}
 }
 
 
 /*get, set & add*/
-void settingsT::load() { *this = list[index]; }
+void settingsT::load() {
+	if (!list.empty())
+	*this = list[index]; 
+}
 void settingsT::save() { list[index] = *this; }
 void settingsT::add() { list.push_back(*this); }

@@ -79,38 +79,18 @@ void setDisplayZoom(bool z) { zoom = z; }
 
 
 void pixelField::setupPalette() {
-	int r, g, b;
+	int red, green, blue;
+	green = 0;
+	for (int b = 0; b < palSize; b++){
+		blue = b;
+		for (int a = 0; a < palSize; a++) {
+			red = a;
+			green = (red + blue) / 2;
 
-	for (int i = 0; i < palSize; i++) {
-		r = i / 3;
-		g = (i / 3) + 1;
-		b = (i / 3) + 2;
-		/*
-		if (i < 255) {
-			b = i;
-			r = 0;
-			g = i / 2;
+			palette[a + palSize*b] = makePixel_RGBA8888(red, green, blue, 255);
 		}
-
-		else if (i < 511) {
-			b = 511 - i;
-			g = i / 2;
-			r = (i - 257) / 2;
-		}
-
-		else {
-			b = 0;
-			g = 511 - (i/2);
-			r = (i - 257) / 2;
-		}*/
-
-		palette[i] = makePixel_RGBA8888(r, g, b, 255);
 	}
-
-	//palette[0] = makePixel_RGBA8888(0, 0, 255, 255);
-	palette[palSize - 3] = makePixel_RGBA8888(255, 255, 255, 255);
-	palette[palSize - 2] = makePixel_RGBA8888(255, 255, 255, 255);
-	palette[palSize - 1] = makePixel_RGBA8888(255,255,255, 255);
+	//palette[palSize*palSize - 1] = makePixel_RGBA8888(255,255,255, 255);
 }
 
 
@@ -132,7 +112,7 @@ bool pixelField::initialize(int width, int height, int paletteSize) {  //määritä
 
 	//varaa muisti pikselidatalle ja paletille
 	pixels = new Uint32[w*h];
-	palette = new Uint32[palSize];
+	palette = new Uint32[palSize*palSize];
 
 	//luo tekstuuri
 	texture = SDL_CreateTexture(gRenderer, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_STREAMING, width, height);
@@ -164,13 +144,24 @@ void pixelField::putPixel(int x, int y, Uint32 value) {
 	//rajatarkastus. Huom: tämä hidastaa vähän
 	if (y < h && x < w) {
 
+		int palSizeSquared = palSize*palSize;
+
 		if (value < 0) 
 			value = 0;
-		if (value >= palSize) 
-			value = palSize - 1;
+		if (value >= palSizeSquared) 
+			value = palSizeSquared - 1;
 
 		pixels[y*w + x] = palette[value];
 	}
+}
+
+
+void pixelField::putPixel(int x, int y, Uint32 A, Uint32 B) {
+	if (A > palSize) A = palSize;
+	if (A<0) A = 0;
+	if (B > palSize) B = palSize;
+	if (B < 0) B = 0;
+	putPixel(x, y, A + palSize*B);
 }
 
 

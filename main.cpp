@@ -123,8 +123,8 @@ void kuuntelija::aloita() {
 
 int main(int argc, char* argv[]) {
 	
-	int verkko_w = 800;
-	int verkko_h = 800;
+	int verkko_w = 200;
+	int verkko_h = 200;
 	int ruutu_w = 800;
 	int ruutu_h = 800;
 

@@ -21,7 +21,6 @@ int H;
 int SIZE;
 int PALSIZE;
 
-//vector<solu> solut;
 solu* solut;
 pixelField* piirto;
 
@@ -31,64 +30,6 @@ avg piirtoKello;
 clock_t initAika;
 
 //--------------GLOBAALIT MUUTTUJAT HUOM -----------------//
-
-/*
-void lataaAsetukset() {  //lataa säännön tiedostosta
-
-	ifstream file(CONF_FILE, ios::in | ios::binary | ios::ate);
-	soluSettingsT* s = new soluSettingsT;
-
-	//lue tiedostosta settings-objekti
-	if (file.is_open()) {
-		if (file.tellg() >= sizeof(soluSettingsT)) {
-			file.seekg(0, ios::beg);
-			file.read((char*)s, sizeof(soluSettingsT));
-			file.close();
-		}
-	}
-
-	//aseta solujen asetukset
-	solu::settings = *s;
-	
-	delete s;
-}
-
-
-void tallennaAsetukset() {
-	ofstream file(CONF_FILE, ios::out | ios::binary | ios::ate);
-
-	//kirjoita tiedostoon
-	if (file.is_open()) {
-		file.seekp(0, ios::beg);
-		file.write((char*) &solu::settings, sizeof(soluSettingsT));
-		file.close();
-	}
-}
-
-
-
-void setLife(int life) { solu::settings.life = life;  }
-void setDeath(int death) { solu::settings.death = death; }
-void setLimit(int limit) { solu::settings.limit = limit; }
-void setLifePercent(int lifePercent) { solu::settings.lifePercent = lifePercent; }
-
-void randomizeRule(int lifePercent) {
-	
-	if (lifePercent <= 0 || lifePercent > 100)
-		lifePercent = rand() % 70 + 15;
-
-	for (int i = 0; i < 9; i++) {
-		solu::settings.rule[i] = (rand() % 3 - 1);
-	}
-
-	//solu::settings.rule[0] = 0;
-	//solu::settings.rule[255] = 0;
-}
-
-void randomizeRule() {
-	randomizeRule(solu::settings.lifePercent);
-}
-*/
 
 
 void kytkeVerkko() {	//kytke kaikki solut toisiinsa
@@ -145,8 +86,6 @@ void initVerkko(int verkonLeveys, int verkonKorkeus, int ruudunLeveys, int ruudu
 	
 	kytkeVerkko();
 	
-	//lataaAsetukset();//lataa rule tiedostosta
-	
 	loadSettings(); //lataa tallennetut asetukset muistiin
 	solu::settings.load(); // aseta solun asetukset
 	
@@ -182,7 +121,7 @@ void laskeStatus() {
 
 void laskeArvot_osa(int alku, int loppu) {
 	for (int i = alku; i < loppu; i++) {
-		solut[i].laskeArvo();
+		solut[i].laskeArvot();
 		solut[i].laskeElo();
 	}
 }
@@ -207,7 +146,7 @@ void laskeArvot() {
 
 void clearVerkko() {
 	for (int i = 0; i < SIZE; i++) {
-		solut[i].asetaArvo(0);
+		solut[i].asetaArvot(0,0);
 	}
 }
 
@@ -219,7 +158,7 @@ void luoSoluja(){
 		int y = (H / 2) + (rand() % 41 - 20);
 
 		int i = y*W + x;
-		solut[i].asetaArvo(rand() % 256);
+		solut[i].asetaArvot(rand() % 256, rand() % 256);
 	}
 
 }
@@ -258,7 +197,7 @@ void piirraVerkko() {
 	clock_t t = clock();
 	for (int y = 0; y < H; y++){
 		for (int x = 0; x < W; x++) {
-			piirto->putPixel(x, y, solut[y*W + x].haeArvo());
+			piirto->putPixel(x, y, solut[y*W + x].haeArvo_A(), solut[y*W + x].haeArvo_B());
 		}
 	}
 

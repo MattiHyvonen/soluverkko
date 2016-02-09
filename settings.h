@@ -23,9 +23,10 @@ public:
 	int limit;
 	int maxValue;
 	int lifePercent;
-	std::array<int, 9> rule;
+	std::array<int, 81> A_rule;
+	std::array<int, 81> B_rule;
 
-	settingsT() : life(20), death(30), limit(30), maxValue(765), lifePercent(-1) {}
+	settingsT() : life(20), death(30), limit(30), maxValue(255), lifePercent(-1) {}
 
 	void randomizeRule();
 

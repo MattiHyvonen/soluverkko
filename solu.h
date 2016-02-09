@@ -7,9 +7,13 @@
 
 class solu{
 protected:
-	short arvo;
-	char elo;
-	char status;		//naapurien elossaolon perusteella koodattu luku.
+	short A;
+	short B;
+	char elo; //tilat: 0, 1, 2, 3  <=>  0; A; B; A&B
+	
+	//status on A_summa + 9*B_summa
+	char status;
+
 	solu** naapurit = NULL;
 
 public:
@@ -18,15 +22,19 @@ public:
 
 	solu();
 	void kytke(std::vector<solu*> kohteet);
-	void asetaArvo(int a);
+	void asetaArvot(short a, short b);
 
 	void laskeStatus();	//tuota status naapurien elon perusteella
-	int laskeArvo();	//päivitä arvo statuksen perusteella
-	bool laskeElo();	//päivitä elo arvon perusteella
+	void laskeArvot();	//päivitä arvot statuksen perusteella
+	void laskeElo();	//päivitä elo arvojen perusteella
 
-	bool onkoElossa();	//palauta eloarvo muuttamatta sitä
-	int haeArvo();		//palauta arvo muuttamatta sitä
+	//palauta eloarvo muuttamatta sitä
+	bool onkoElossa_A();
+	bool onkoElossa_B();
 
+	//palauta arvo muuttamatta sitä
+	short haeArvo_A();		
+	short haeArvo_B();
 };
 
 #endif
