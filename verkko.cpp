@@ -122,7 +122,7 @@ void laskeStatus() {
 void laskeArvot_osa(int alku, int loppu) {
 	for (int i = alku; i < loppu; i++) {
 		solut[i].laskeArvot();
-		solut[i].laskeElo();
+		//solut[i].laskeElo();
 	}
 }
 
@@ -153,12 +153,14 @@ void clearVerkko() {
 
 void luoSoluja(){
 	//lisätään soluja
-	for (int t = 0; t < 300; t++){
-		int x = (W / 2) + (rand() % 41 - 20);
-		int y = (H / 2) + (rand() % 41 - 20);
+	for (int t = 0; t < 200; t++){
+		int x = (W / 2) + (rand() % 31 - 15);
+		int y = (H / 2) + (rand() % 31 - 15);
 
-		int i = y*W + x;
-		solut[i].asetaArvot(rand() % 256, rand() % 256);
+		if (x >= 0 && x < W && y >= 0 && y < H) {
+			int i = y*W + x;
+			solut[i].asetaArvot(rand() % 256, rand() % 256);
+		}
 	}
 
 }

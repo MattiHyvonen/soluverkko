@@ -67,9 +67,27 @@ void random() {
 }
 
 void settingsT::randomizeRule() {
-	for (int i = 0; i < 81; i++) {
-		A_rule[i] = (rand() % 3 - 1);
-		B_rule[i] = (rand() % 3 - 1);
+
+	int P_A = rand() % 41 + 60;		// P(A!=0) [%]
+	int P_Apos = rand() % 41;	    // P(A==1), kun A!=0 [%]
+	int P_B = P_A;		// jne
+	int P_Bpos = P_Apos;	
+
+	for (int i = 0; i < 256; i++) {
+		char A = 0;
+		char B = 0;
+		if (rand() % 100 < P_A) {
+			if (rand() % 100 < P_Apos)
+				A = 1;
+			else A = -1;
+		}
+		if (rand() % 100 < P_B) {
+			if (rand() % 100 < P_Bpos)
+				B = 1;
+			else B = -1;
+		}
+		A_rule[i] = A;
+		B_rule[i] = B;
 	}
 }
 
@@ -79,5 +97,34 @@ void settingsT::load() {
 	if (!list.empty())
 	*this = list[index]; 
 }
-void settingsT::save() { list[index] = *this; }
-void settingsT::add() { list.push_back(*this); }
+
+void settingsT::save() { 
+	if (list.empty())
+		add();
+	else
+		list[index] = *this;
+}
+
+void settingsT::add() { 
+	list.push_back(*this); 
+}
+
+void settingsT::printOut() {
+	/*std::cout << "A:";
+	for (int i = 0; i < 81; i++) {
+		if (i % 9 == 0) std::cout << "\n";
+		if (A_rule[i] == -1) std::cout << 'D';
+		else if (A_rule[i] == 0) std::cout << '0';
+		else if (A_rule[i] == 1) std::cout << 'L';
+	}
+
+	std::cout << "\nB:";
+
+	for (int i = 0; i < 81; i++) {
+		if (i % 9 == 0) std::cout << "\n";
+		if (B_rule[i] == -1) std::cout << 'D';
+		else if (B_rule[i] == 0) std::cout << '0';
+		else if (B_rule[i] == 1) std::cout << 'L';
+	}
+	std::cout << '\n';*/
+}

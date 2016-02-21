@@ -37,7 +37,7 @@ void solu::asetaArvot(short a, short b) {
 
 
 void solu::laskeStatus(){	//tuota status naapurien elon perusteella                    
-	status = 0;
+	/*status = 0;
 	if (naapurit[0]->onkoElossa_A()) status += 1;
 	if (naapurit[0]->onkoElossa_B()) status += 9;
 	if (naapurit[1]->onkoElossa_A()) status += 1;
@@ -53,8 +53,41 @@ void solu::laskeStatus(){	//tuota status naapurien elon perusteella
 	if (naapurit[6]->onkoElossa_A()) status += 1;
 	if (naapurit[6]->onkoElossa_B()) status += 9;
 	if (naapurit[7]->onkoElossa_A()) status += 1;
-	if (naapurit[7]->onkoElossa_B()) status += 9;
+	if (naapurit[7]->onkoElossa_B()) status += 9;*/
 
+	int asum = 0;
+	int bsum = 0;
+
+	asum += naapurit[0]->haeArvo_A();
+	bsum += naapurit[0]->haeArvo_B();
+	asum += naapurit[1]->haeArvo_A();
+	bsum += naapurit[1]->haeArvo_B();
+	asum += naapurit[2]->haeArvo_A();
+	bsum += naapurit[2]->haeArvo_B();
+	asum += naapurit[3]->haeArvo_A();
+	bsum += naapurit[3]->haeArvo_B();
+	asum += naapurit[4]->haeArvo_A();
+	bsum += naapurit[4]->haeArvo_B();
+	asum += naapurit[5]->haeArvo_A();
+	bsum += naapurit[5]->haeArvo_B();
+	asum += naapurit[6]->haeArvo_A();
+	bsum += naapurit[6]->haeArvo_B();
+	asum += naapurit[7]->haeArvo_A();
+	bsum += naapurit[7]->haeArvo_B();
+
+	//0...9*255
+
+	asum /= 144; 
+	bsum /= 144;
+
+	//0...16
+
+	status = asum + bsum * 16;
+
+	//0...255
+
+	if (status < 0) status = 0;
+	else if (status > 255) status = 255;
 }
 
 

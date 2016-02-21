@@ -23,8 +23,8 @@ public:
 	int limit;
 	int maxValue;
 	int lifePercent;
-	std::array<int, 81> A_rule;
-	std::array<int, 81> B_rule;
+	std::array<int, 256> A_rule;
+	std::array<int, 256> B_rule;
 
 	settingsT() : life(20), death(30), limit(30), maxValue(255), lifePercent(-1) {}
 
@@ -34,6 +34,7 @@ public:
 	void load();
 	void save();
 	void add();
+	void printOut();
 
 };
 

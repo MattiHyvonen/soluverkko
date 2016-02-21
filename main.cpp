@@ -95,14 +95,25 @@ void kuuntelija::kuuntele() {
 		}
 		else if (s.compare("savesettings") == 0)
 			solu::settings.save();
-		else if (s.compare("loadsettings") == 0)
+		else if (s.compare("addsettings") == 0)
+			solu::settings.add();
+		else if (s.compare("loadsettings") == 0) {
 			solu::settings.load();
+			solu::settings.printOut();
+		}
+		else if (s.compare("next") == 0) {
+			next();
+			solu::settings.load();
+			solu::settings.printOut();
+		}
 		else if (s.compare("time") == 0 || s.compare("aika") == 0) {
 			kerroAjat();
 			cout << "Steps: " << STEPS << "\n";
 		}
-		else if (s.compare("randomize") == 0 || s.compare("reset")==0 )   //reset = randomize+clear
+		else if (s.compare("randomize") == 0 || s.compare("reset") == 0) {  //reset = randomize+clear
 			solu::settings.randomizeRule();
+			solu::settings.printOut();
+		}
 
 		if (s.compare("quit") == 0 || s.compare("lopeta") == 0 || s.compare("exit") == 0)
 			viesti = UI_QUIT;
@@ -123,10 +134,12 @@ void kuuntelija::aloita() {
 
 int main(int argc, char* argv[]) {
 	
-	int verkko_w = 200;
-	int verkko_h = 200;
-	int ruutu_w = 800;
-	int ruutu_h = 800;
+	srand(time(NULL));
+
+	int verkko_w = 300;
+	int verkko_h = 300;
+	int ruutu_w = 900;
+	int ruutu_h = 900;
 
 	if (argc == 5) {
 		ruutu_w = atoi(argv[3]);
@@ -156,6 +169,7 @@ int main(int argc, char* argv[]) {
 		STEPS++;
 	}
 
+	saveSettings();
 	suljeVerkko();
 	return 0;
 

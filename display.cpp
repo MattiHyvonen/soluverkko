@@ -80,17 +80,19 @@ void setDisplayZoom(bool z) { zoom = z; }
 
 void pixelField::setupPalette() {
 	int red, green, blue;
-	green = 0;
 	for (int b = 0; b < palSize; b++){
+		
 		blue = b;
+
 		for (int a = 0; a < palSize; a++) {
 			red = a;
-			green = (red + blue) / 2;
+			
+			green = (red + blue)/2;
 
 			palette[a + palSize*b] = makePixel_RGBA8888(red, green, blue, 255);
 		}
 	}
-	//palette[palSize*palSize - 1] = makePixel_RGBA8888(255,255,255, 255);
+	//palette[0] = makePixel_RGBA8888(0,0,255, 255);
 }
 
 
