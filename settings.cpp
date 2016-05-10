@@ -74,6 +74,7 @@ void settingsT::randomizeRule() {
 	int P_Bpos = P_Apos;	
 
 	for (int i = 0; i < 256; i++) {
+		/*
 		char A = 0;
 		char B = 0;
 		if (rand() % 100 < P_A) {
@@ -86,8 +87,18 @@ void settingsT::randomizeRule() {
 				B = 1;
 			else B = -1;
 		}
-		A_rule[i] = A;
-		B_rule[i] = B;
+		*/
+
+		A_rule[i] = rand() % (2*life) - life;
+		B_rule[i] = rand() % (2 * life) - life;
+	}
+}
+
+
+void settingsT::setRule(Uint32* a, Uint32* b) {
+	for (int i = 0; i < 256; i++) {
+		A_rule[i] = a[i] - 8; 
+		B_rule[i] = b[i] - 8;
 	}
 }
 

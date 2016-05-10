@@ -6,6 +6,7 @@
 #include <vector>
 #include <string>
 #include <array>
+#include <SDL.h>
 
 /*load from & save to conf file*/
 void loadSettings();
@@ -29,6 +30,7 @@ public:
 	settingsT() : life(20), death(30), limit(30), maxValue(255), lifePercent(-1) {}
 
 	void randomizeRule();
+	void setRule(Uint32* a, Uint32* b);
 
 	/*load from list, save to list, add to list*/
 	void load();

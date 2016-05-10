@@ -53,8 +53,11 @@ void solu::laskeStatus(){	//tuota status naapurien elon perusteella
 	if (naapurit[6]->onkoElossa_A()) status += 1;
 	if (naapurit[6]->onkoElossa_B()) status += 9;
 	if (naapurit[7]->onkoElossa_A()) status += 1;
-	if (naapurit[7]->onkoElossa_B()) status += 9;*/
+	if (naapurit[7]->onkoElossa_B()) status += 9;
 
+	// 0...80
+	*/
+	
 	int asum = 0;
 	int bsum = 0;
 
@@ -75,24 +78,24 @@ void solu::laskeStatus(){	//tuota status naapurien elon perusteella
 	asum += naapurit[7]->haeArvo_A();
 	bsum += naapurit[7]->haeArvo_B();
 
-	//0...9*255
+	//0...8*255
 
-	asum /= 144; 
-	bsum /= 144;
+	asum /= 128; //oli 144 
+	bsum /= 128;
 
-	//0...16
+	//0...15
 
 	status = asum + bsum * 16;
 
 	//0...255
-
+	
 	if (status < 0) status = 0;
 	else if (status > 255) status = 255;
 }
 
 
 void solu::laskeArvot(){	//päivitä arvo statuksen perusteella
-	if (settings.A_rule[status] > 0)
+	/*if (settings.A_rule[status] > 0)
 		A += settings.life;
 	else if(settings.A_rule[status] < 0)
 		A -= settings.death;
@@ -104,6 +107,14 @@ void solu::laskeArvot(){	//päivitä arvo statuksen perusteella
 		B += settings.life;
 	else if (settings.B_rule[status] < 0)
 		B -= settings.death;
+	if (B < 0) B = 0;
+	if (B > settings.maxValue) B = settings.maxValue;*/
+
+	A += settings.A_rule[status];
+	if (A < 0) A = 0;
+	if (A > settings.maxValue) A = settings.maxValue;
+
+	B += settings.B_rule[status];
 	if (B < 0) B = 0;
 	if (B > settings.maxValue) B = settings.maxValue;
 

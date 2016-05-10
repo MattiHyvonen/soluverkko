@@ -1,5 +1,6 @@
 #include "verkko.h"
-#include "display.h"
+//#include "display.h"
+#include "piirto.h"
 #include "solu.h"
 
 #include <iostream>
@@ -31,6 +32,20 @@ struct kuuntelija{
 };
 
 
+void saveImage() {
+	static int savedcount = 0;
+
+	stringstream iss;
+	string is;
+	iss << savedcount;
+	iss >> is;
+	string filename = "solu" + is;
+	tallennaKuva(filename);
+	cout << "Tallennettiin " << filename << "\n";
+	savedcount++;
+}
+
+
 void kuuntelija::kuuntele() {
 	while (viesti != UI_QUIT){
 		string s;
@@ -46,7 +61,6 @@ void kuuntelija::kuuntele() {
 		ss << s;
 		ss >> s;
 		ss >> arg;
-		static int savedcount = 0;
 
 		if (s.compare("limit") == 0) {
 			if (arg > 0 && arg < solu::settings.maxValue) {
@@ -54,44 +68,8 @@ void kuuntelija::kuuntele() {
 				cout << "Set limit " << arg << "\n";
 			}
 		}
-		else if (s.compare("life") == 0) {
-			if (arg > 0 && arg < solu::settings.maxValue) {
-				solu::settings.life = arg;
-				cout << "Set Life change " << arg << "\n";
-			}
-		}
-		else if (s.compare("death") == 0) {
-			if (arg > 0 && arg < solu::settings.maxValue) {
-				solu::settings.death = arg;
-				cout << "Set Death change " << arg << "\n";
-			}
-		}
-		else if (s.compare("lifepercent") == 0) {
-			solu::settings.lifePercent = arg;
-			cout << "Set Life percent " << arg << "\n";
-		}
-		else if (s.compare("zoom") == 0) {
-			if (arg == 0) {
-				setDisplayZoom(0);
-				cout << "Zoom pois\n";
-			}
-			else if (arg == 1) {
-				setDisplayZoom(1);
-				cout << "Zoom päällä\n";
-			}
-			else
-				cout << "Huono parametri " << arg << "\n";
-			
-		}
 		else if (s.compare("save") == 0) {
-			stringstream iss;
-			string is;
-			iss << savedcount;
-			iss >> is;
-			string filename = "solu" + is;
-			tallennaKuva(filename);
-			cout << "Tallennettiin " << filename << "\n";
-			savedcount++;
+			saveImage();
 		}
 		else if (s.compare("savesettings") == 0)
 			solu::settings.save();
@@ -136,10 +114,10 @@ int main(int argc, char* argv[]) {
 	
 	srand(time(NULL));
 
-	int verkko_w = 300;
-	int verkko_h = 300;
-	int ruutu_w = 900;
-	int ruutu_h = 900;
+	int verkko_w = 200;
+	int verkko_h = 200;
+	int ruutu_w = 800;
+	int ruutu_h = 800;
 
 	if (argc == 5) {
 		ruutu_w = atoi(argv[3]);
@@ -160,13 +138,15 @@ int main(int argc, char* argv[]) {
 	while (k.viesti != UI_QUIT) {
 		laskeVerkko();
 		piirraVerkko();
-
+		
 		if (k.viesti == UI_RESET) {
 			resetVerkko();
 			k.viesti = UI_DEFAULT;
 		}
 
 		STEPS++;
+
+	//	SDL_Delay(100);
 	}
 
 	saveSettings();

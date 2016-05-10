@@ -1,4 +1,5 @@
-#include "display.h"
+//#include "display.h" //POISTA TÄMÄ
+#include "piirto.h"
 #include "verkko.h"
 
 #include <iostream>
@@ -22,7 +23,9 @@ int SIZE;
 int PALSIZE;
 
 solu* solut;
-pixelField* piirto;
+//pixelField* piirto;
+soluWindow piirto;
+interfaceWindow interface;
 
 avg statusKello;
 avg arvoKello;
@@ -77,10 +80,13 @@ void initVerkko(int verkonLeveys, int verkonKorkeus, int ruudunLeveys, int ruudu
 	SIZE = W*H;
 	PALSIZE = paletinKoko;
 
-	initDisplay(ruudunLeveys, ruudunKorkeus);
-
+	/*initDisplay(ruudunLeveys, ruudunKorkeus);
 	piirto = new pixelField;
 	piirto->initialize(W, H, PALSIZE);
+	*/
+
+	piirto.init(verkonLeveys, verkonKorkeus);
+	interface.init();
 
 	solut = new solu[SIZE]; //tässä menee KAUAN
 	
@@ -188,8 +194,8 @@ void laskeVerkko(){
 
 void suljeVerkko() {
 
-	piirto->close();
-	closeDisplay();
+	//piirto->close();
+	//closeDisplay();
 
 	delete[] solut; //tässä menee KAUAN
 }
@@ -199,11 +205,26 @@ void piirraVerkko() {
 	clock_t t = clock();
 	for (int y = 0; y < H; y++){
 		for (int x = 0; x < W; x++) {
-			piirto->putPixel(x, y, solut[y*W + x].haeArvo_A(), solut[y*W + x].haeArvo_B());
+			piirto.solut.putPixel(x, y, solut[y*W + x].haeArvo_A() + 256 * solut[y*W + x].haeArvo_B());
 		}
 	}
 
-	piirto->show();
+	piirto.show();
+	interface.show();
+
+	soluEventT e = interface.handleEvent();
+
+	switch (e) {
+	case CLEAR:
+		resetVerkko();
+		break;
+	case CLEAR_RULE:
+		interface.ruleField.clear();
+	case CHANGED:
+		solu::settings.setRule(interface.getRule(), interface.getRule());
+
+	}
+
 	piirtoKello.put(clock() - t);
 }
 
@@ -221,5 +242,5 @@ void tallennaKuva(string filename) {
 
 	string fullfile = "D:\ " + filename + ".png";
 
-	piirto->save(fullfile);
+	//piirto->save(fullfile);
 }

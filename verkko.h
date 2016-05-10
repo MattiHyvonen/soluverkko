@@ -6,7 +6,7 @@
 #include <array>
 #include <string>
 
-void initVerkko(int verkonLeveys = 100, int verkonKorkeus = 100, int ruudunLeveys = 600, int ruudunKorkeus = 500, int paletinKoko = 256);
+void initVerkko(int verkonLeveys = 100, int verkonKorkeus = 100, int ruudunLeveys = 600, int ruudunKorkeus = 500, int paletinKoko = 512);
 void resetVerkko();
 void laskeVerkko();
 void suljeVerkko();

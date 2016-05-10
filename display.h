@@ -44,7 +44,7 @@ public:
 	//m‰‰rit‰ paletti ja pixels sek‰ luo tekstuuri:
 	bool initialize(int width = PF_DEFAULT_W, int height = PF_DEFAULT_H, int paletteSize = PF_DEFAULT_PALSIZE);
 
-	void putPixel(int x, int y, Uint32 value);		//aseta pikseli. Kutsu update t‰m‰n j‰lkeen
+	void putPixel(int x, int y, Uint32 value);		//aseta pikseli
 	void putPixel(int x, int y, Uint32 A, Uint32 B);
 
 	bool show();	//tee muutokset tekstuuriin ja piirr‰ ruudulle

@@ -70,6 +70,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="display.h" />
+    <ClInclude Include="piirto.h" />
     <ClInclude Include="settings.h" />
     <ClInclude Include="verkko.h" />
     <ClInclude Include="solu.h" />
@@ -77,6 +78,7 @@
   <ItemGroup>
     <ClCompile Include="display.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="piirto.cpp" />
     <ClCompile Include="settings.cpp" />
     <ClCompile Include="solu.cpp" />
     <ClCompile Include="verkko.cpp" />
